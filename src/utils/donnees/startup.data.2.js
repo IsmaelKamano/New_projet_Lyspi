@@ -1,0 +1,132 @@
+import images from '../../assets/index'
+
+const startupData_2 = [
+    {
+        id: 1,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 2,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 3,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 4,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 5,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 6,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 7,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 8,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 9,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 10,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 12,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 13,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 14,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 15,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 16,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 17,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 18,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    },
+    {
+        id: 19,
+        nomStartup: "Nom Startup",
+        descriptions: 'Dévoloppement individuel de chaque ville et de chaque chaque quartier',
+        imageStartup: images.ginhoSong,
+        imageProfil: images.ginhoSong,
+    }
+]
+
+export default startupData_2
