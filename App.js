@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Header from './src/components/Header'
 import Inscription from './src/Screens/Inscriptions';
 
 import MenuLateral from './src/Screens/MenuLateral';
@@ -14,47 +13,10 @@ import StartupScreen from './src/Screens/StartupScreen';
 import Formation from './src/Screens/FormationScreen';
 import startupData_2 from './src/utils/donnees/startup.data.2';
 // import offre from './src/Screens/StagesScreen';
-
+import FlatsStartup from './src/components/FlatsStartup';
+import Test from './src/utils/Start';
 
 const PlusStack = createNativeStackNavigator();
-
-const FlatsStartup = () => {
-  return (
-    <View>
-      {/* <FlatList
-        data={startupData_2}
-        keyExtractor={(item) => item.id}
-          renderItem={
-            (item) => {
-              <ComposantStartup
-                nomStartup={item.nomStartup}
-                imageProfil={item.imageProfil}
-                imageStartup={item.imageStartup}
-                descriptions={item.descriptions}
-              />
-            }
-        }
-      /> */}
-      {
-        startupData_2.map((item, index)=>{
-          return (
-            <ScrollView 
-              style={{flex: 1}}
-              key={item.id}
-            >
-                <ComposantStartup
-                    nomStartup={item.nomStartup}
-                    imageProfil={item.imageProfil}
-                    imageStartup={item.imageStartup}
-                    descriptions={item.descriptions}
-                  />
-            </ScrollView>
-          )
-        })
-      }
-    </View>
-  )
-}
 
 function PlusStackNavigator() {
   return (
@@ -93,7 +55,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Stage"
-          children={ComposantStartup}
+          children={Test}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="school" color={color} size={size} />
@@ -111,7 +73,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Formation"
-          children={ComposantStartup}
+          children={Inscription}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="book-open" color={color} size={size} />

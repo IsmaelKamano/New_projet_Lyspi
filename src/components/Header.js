@@ -59,10 +59,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    width: width - 24, // même marge que ton Start.js (padding:12)
+    width: "95%", // même marge que ton Start.js (padding:12)
     marginHorizontal: 12,
     paddingVertical: 8,
     backgroundColor: "#fff",
+    marginHorizontal: 'auto'
   },
   profileImage: {
     width: 36,

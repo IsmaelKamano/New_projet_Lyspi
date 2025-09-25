@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, FlatList, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import images from '../assets/index';
+import Header from '../components/Header';
 
 const stories = [
   {
@@ -31,21 +32,45 @@ export default function App() {
   const renderItem = ({ item }) => {
     return (
       <Card style={styles.card}>
+        {/* En-tête de la publication */}
+        <View style={styles.headers}>
+          <Image style={{ width: 40, height: 40, borderRadius: 40 }} source={images.ginhoSong} />
+          
+          <View style={styles.headerText}>
+            <Text style={styles.nom}>Nom</Text>
+            <Text style={styles.date}>12h 30</Text>
+          </View>
+        </View>
+
+
         <Image source={item.image } style={styles.image} />
         <Card.Content>
           <Title>{item.name}</Title>
           <Paragraph>{item.story}</Paragraph>
         </Card.Content>
-        <Card.Actions style={styles.actions}>
+        {/* Boutons d'interaction */}
+        <View style={styles.actionse}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => alert ('vous avez cliquer sur ce boutton')}>
+            <Text style={styles.actionText}>👍 Like</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={() => alert ('vous avez cliquer sur ce boutton')}>
+            <Text style={styles.actionText}>💬 Commentaire</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={() => alert ('vous avez cliquer sur ce boutton')}>
+            <Text style={styles.actionText}>🤝 Partager</Text>
+          </TouchableOpacity>
+        </View>
+        {/* <Card.Actions style={styles.actions}>
           <Button onPress={() => Linking.openURL(item.video)}>🎥 Voir la vidéo</Button>
-        </Card.Actions>
+        </Card.Actions> */}
       </Card>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>🎉 Success Stories Inspirantes</Text>
+      {/* <Text style={styles.header}>🎉 Success Stories Inspirantes</Text> */}
+      <Header />
       <FlatList
         data={stories}
         renderItem={renderItem}
@@ -60,7 +85,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0f4f7',
-    paddingTop: 40,
+    paddingTop: 30,
+    padding: 7
   },
   header: {
     fontSize: 24,
@@ -84,5 +110,31 @@ const styles = StyleSheet.create({
   actions: {
     justifyContent: 'flex-end',
     paddingHorizontal: 8,
+  },
+  actionse: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderColor: "#eee",
+    borderTopWidth: 2,
+    marginTop: 7
+  },
+  actionButton: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  actionText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#444",
+  },
+  headers: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  headerText: {
+    marginLeft: 10,
   },
 });

@@ -1,15 +1,16 @@
-import { 
-  View, 
-  Text, 
-  SafeAreaView, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity 
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity
 } from "react-native";
 import LogoLispy from "../components/logoLispy";
 import images from "../assets/index";
 import Header from "../components/Header";
+import couleur from "../utils/couleurs/couleurs";
 const { width } = Dimensions.get("window");
 
 const ComposantStartup = ({
@@ -26,7 +27,7 @@ const ComposantStartup = ({
     <SafeAreaView style={[styles.container, {padding: 15}]}>
       {/* En-tête de la publication */}
       <View style={styles.header}>
-        <Image style={{ width: 45, height: 45 }} source={imageProfil} />
+        <Image style={{ width: 40, height: 40, borderRadius: 40 }} source={imageProfil} />
         
         <View style={styles.headerText}>
           <Text style={styles.nom}>{nomStartup}</Text>
@@ -42,9 +43,9 @@ const ComposantStartup = ({
       </View>
 
       {/* Image principale */}
-      <Image 
-        source={imageStartup} 
-        style={styles.imagePost} 
+      <Image
+        source={imageStartup}
+        style={styles.imagePost}
         resizeMode="cover"
       />
 
@@ -68,9 +69,16 @@ export default ComposantStartup;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 12,
     backgroundColor: "#fff",
+    elevation: 3,
+    margin: 10,
+    shadowOffset: 30,
+    shadowColor: 'black',
+    borderRadius: 10,
+    outlineColor: "#0001",
+    outlineWidth: 3.5
   },
   header: {
     flexDirection: "row",
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   imagePost: {
-    width: width * 0.95,
+    width: "100%",
     height: 220,
     borderRadius: 10,
     alignSelf: "center",
