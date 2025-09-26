@@ -123,7 +123,13 @@ import BoutonConnexion from "../components/BoutonConnexion";
 
 
 const TestSaisie = () => {
-
+  return (
+    <View style={styles.postText}>
+        <Text style={styles.description}>
+          Voici une petite description comme dans une publication Facebook. 🚀
+        </Text>
+    </View>
+  )
 }
 
 
@@ -134,3 +140,6 @@ const styles = StyleSheet.create({
   },
   
 })
+
+
+export default TestSaisie

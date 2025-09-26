@@ -1,23 +1,22 @@
 import React from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, FlatList, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Inscription from './src/Screens/Inscriptions';
 
-import MenuLateral from './src/Screens/MenuLateral';
-import ComposantStartup from './src/components/ComposantStartup';
+// Import des écrans et composants
+import MenuLateral from './src/navigations/MenuLateral';
 import succesStories from './src/Screens/succesStories';
-import StartupScreen from './src/Screens/StartupScreen';
-import Formation from './src/Screens/FormationScreen';
-import startupData_2 from './src/utils/donnees/startup.data.2';
-// import offre from './src/Screens/StagesScreen';
 import FlatsStartup from './src/components/FlatsStartup';
-import Test from './src/utils/Start';
+import Stage from './src/Screens/Stage';
+import Emploi from './src/Screens/Emploi';
+import Formation from './src/Screens/Formation';
 
+const Tab = createBottomTabNavigator();
 const PlusStack = createNativeStackNavigator();
 
+// Stack pour la section "Plus"
 function PlusStackNavigator() {
   return (
     <PlusStack.Navigator>
@@ -26,13 +25,11 @@ function PlusStackNavigator() {
         component={MenuLateral}
         options={{ title: 'Plus', headerShown: false }}
       />
-      {/* Ajoute les autres écrans comme Profil, Mentorat, etc. ici si besoin */}
     </PlusStack.Navigator>
   );
 }
 
-const Tab = createBottomTabNavigator();
-
+// App principale
 export default function App() {
   return (
     <NavigationContainer>
@@ -46,7 +43,7 @@ export default function App() {
       >
         <Tab.Screen
           name="Startups"
-          children= {FlatsStartup}
+          component={FlatsStartup}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="rocket" color={color} size={size} />
@@ -55,7 +52,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Stage"
-          children={Test}
+          component={Stage}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="school" color={color} size={size} />
@@ -64,7 +61,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Emploi"
-          children={StartupScreen}
+          component={Emploi}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="briefcase" color={color} size={size} />
@@ -73,7 +70,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Formation"
-          children={Inscription}
+          component={Formation}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="book-open" color={color} size={size} />
@@ -103,6 +100,7 @@ export default function App() {
   );
 }
 
+// Styles (non utilisés pour l'instant, mais conservés)
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
