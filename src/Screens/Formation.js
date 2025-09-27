@@ -11,6 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome, MaterialIcons, Entypo } from '@expo/vector-icons';
 import images from '../assets/index';
+import Header from '../components/Header'
 
 const formations = [
   {
@@ -120,7 +121,8 @@ export default function FormationList() {
   );
 
   return (
-    <View style={styles.listContainer}>
+    <View style={[styles.listContainer, {marginVertical: 30 }]}>
+    <Header utiliserBoutonCreer= {false}/>
       <FlatList
         data={formations}
         renderItem={renderItem}
@@ -134,7 +136,6 @@ export default function FormationList() {
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#f7f9fc',
   },
   card: {

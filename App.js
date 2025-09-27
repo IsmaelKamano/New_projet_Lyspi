@@ -88,7 +88,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Plus"
-          component={PlusStackNavigator}
+          component={MenuLateral}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="dots-horizontal" color={color} size={size} />

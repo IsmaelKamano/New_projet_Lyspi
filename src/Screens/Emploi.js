@@ -6,6 +6,7 @@ import { Card } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import images from '../assets/index';
+import Header from '../components/Header';
 
 const staticOffers = [
   {
@@ -96,7 +97,8 @@ const OffreList = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, marginVertical: 30 }}>
+      <Header utiliserBoutonCreer= {false}/>
       <FlatList
         data={staticOffers}
         renderItem={renderItem}

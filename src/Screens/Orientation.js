@@ -85,6 +85,7 @@ const domainesMetiersEntreprises = [
 export default function OrientationMetiersPage() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      
       <Text style={styles.header}>🔍 Orientation métiers et entreprises</Text>
 
       {domainesMetiersEntreprises.map((item, index) => (

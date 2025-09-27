@@ -13,7 +13,13 @@ import images from "../assets/index"; // si tu veux utiliser ton image profil lo
 
 const { width } = Dimensions.get("window");
 
-const Header = () => {
+const Header = ({utiliserBoutonCreer = true}) => {
+  let afficher = ''
+
+  if(utiliserBoutonCreer)
+    afficher = 'visible'
+  else
+    afficher = 'none'
   return (
     <View style={styles.container}>
       {/* Photo de profil */}
@@ -45,7 +51,7 @@ const Header = () => {
         </TouchableOpacity>
 
         {/* Bouton Créer */}
-        <TouchableOpacity style={styles.createButton}>
+        <TouchableOpacity style={[styles.createButton, {display: afficher}]}>
           <Text style={styles.createText}>Créer</Text>
         </TouchableOpacity>
       </View>

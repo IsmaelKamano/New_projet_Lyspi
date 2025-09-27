@@ -13,7 +13,7 @@ const Drawer = createDrawerNavigator();
 
 export default function MenuLateral() {
   return (
-    <Drawer.Navigator initialRouteName="Profils">
+    <Drawer.Navigator >
       <Drawer.Screen name="Profils" component={Profils} />
       <Drawer.Screen name="Orientation" component={Orientation} />
       <Drawer.Screen name="Mentorat" component={Mentorat} />
