@@ -6,17 +6,17 @@ import { Card } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import images from '../assets/index';
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 const staticOffers = [
   {
     id: 1,
     poste: 'Développeur React Native',
-    fichier_url: images.ginhoSong,
+    fichier_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
     entreprise: {
       nom_entreprise: 'TechCorp',
       secteur_geographique: 'Paris, France',
-      logo_url: images.profilFemme,
+      logo_url: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
     },
     competences: 'React Native, API REST, Git',
     date_debut: '01/10/2025',
@@ -27,11 +27,11 @@ const staticOffers = [
   {
     id: 2,
     poste: 'UX/UI Designer',
-    fichier_url: images.ginhoSong,
+    fichier_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
     entreprise: {
       nom_entreprise: 'Designify',
       secteur_geographique: 'Lyon, France',
-      logo_url: images.profilHomme,
+      logo_url: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg',
     },
     competences: 'Figma, Adobe XD',
     date_debut: '15/10/2025',
@@ -45,7 +45,9 @@ const staticOffers = [
 const isImage = (url) => {
   if (!url) return false;
   return (
-    /\.(jpg|jpeg|png|gif|bmp|webp|pdf)$/i.test(url)
+    /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(url) ||
+    url.includes('unsplash.com') ||
+    url.includes('images.')
   );
 };
 
@@ -57,7 +59,7 @@ const OffreList = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Details', { offre: item })}>
         <Card style={styles.card}>
           <View style={styles.header}>
-            <Image source={item.entreprise.logo_url} style={styles.logo} resizeMode="contain" />
+            <Image source={{ uri: item.entreprise.logo_url }} style={styles.logo} resizeMode="contain" />
             <View style={styles.headerText}>
               <Text style={styles.title}>{item.entreprise.nom_entreprise}</Text>
               <Text style={styles.location}>{item.entreprise.secteur_geographique}</Text>
@@ -66,12 +68,12 @@ const OffreList = () => {
           </View>
 
           {/* ✅ Affichage du flyer si image détectée */}
-          {/* {isImage(item.fichier_url) && (
-        )} */}
-        <Card.Cover
-          source={item.fichier_url }
-          style={{ marginBottom: 10, borderRadius: 8 }}
-        />
+          {isImage(item.fichier_url) && (
+            <Card.Cover
+              source={{ uri: item.fichier_url }}
+              style={{ marginBottom: 10, borderRadius: 8 }}
+            />
+          )}
 
           <View style={styles.actions}>
             <View style={styles.actionButton}>
@@ -98,7 +100,7 @@ const OffreList = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, marginVertical: 30 }}>
-      <Header utiliserBoutonCreer= {false}/>
+      <Header utiliserBoutonCreer={false} />
       <FlatList
         data={staticOffers}
         renderItem={renderItem}

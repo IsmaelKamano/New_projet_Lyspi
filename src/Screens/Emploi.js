@@ -41,60 +41,44 @@ const staticOffers = [
   },
 ];
 
-// ✅ Détection améliorée des images même sans extension
-const isImage = (url) => {
-  if (!url) return false;
-  return (
-    /\.(jpg|jpeg|png|gif|bmp|webp|pdf)$/i.test(url)
-  );
-};
-
 const OffreList = () => {
   const navigation = useNavigation();
 
-  const renderItem = ({ item }) => {
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate('Details', { offre: item })}>
-        <Card style={styles.card}>
-          <View style={styles.header}>
-            <Image source={item.entreprise.logo_url} style={styles.logo} resizeMode="contain" />
-            <View style={styles.headerText}>
-              <Text style={styles.title}>{item.entreprise.nom_entreprise}</Text>
-              <Text style={styles.location}>{item.entreprise.secteur_geographique}</Text>
-              <Text style={styles.company}>{item.poste}</Text>
-            </View>
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('OffreEmploiDetails', { offre: item })}>
+      <Card style={styles.card}>
+        <View style={styles.header}>
+          <Image source={item.entreprise.logo_url} style={styles.logo} resizeMode="contain" />
+          <View style={styles.headerText}>
+            <Text style={styles.title}>{item.entreprise.nom_entreprise}</Text>
+            <Text style={styles.location}>{item.entreprise.secteur_geographique}</Text>
+            <Text style={styles.company}>{item.poste}</Text>
+          </View>
+        </View>
+
+        <Card.Cover source={item.fichier_url} style={{ marginBottom: 10, borderRadius: 8 }} />
+
+        <View style={styles.actions}>
+          <View style={styles.actionButton}>
+            <FontAwesome name="heart" size={24} color="#ccc" />
+            <Text style={styles.actionText}>Like</Text>
+            <Text style={styles.countText}>12 likes</Text>
           </View>
 
-          {/* ✅ Affichage du flyer si image détectée */}
-          {/* {isImage(item.fichier_url) && (
-        )} */}
-        <Card.Cover
-          source={item.fichier_url }
-          style={{ marginBottom: 10, borderRadius: 8 }}
-        />
-
-          <View style={styles.actions}>
-            <View style={styles.actionButton}>
-              <FontAwesome name="heart" size={24} color="#ccc" />
-              <Text style={styles.actionText}>Like</Text>
-              <Text style={styles.countText}>12 likes</Text>
-            </View>
-
-            <View style={styles.actionButton}>
-              <FontAwesome name="comment" size={20} color="#007AFF" />
-              <Text style={styles.actionText}>Commenter</Text>
-              <Text style={styles.countText}>3 commentaires</Text>
-            </View>
-
-            <View style={styles.actionButton}>
-              <FontAwesome name="paper-plane" size={20} color="blue" />
-              <Text style={styles.actionText}>Postuler</Text>
-            </View>
+          <View style={styles.actionButton}>
+            <FontAwesome name="comment" size={20} color="#007AFF" />
+            <Text style={styles.actionText}>Commenter</Text>
+            <Text style={styles.countText}>3 commentaires</Text>
           </View>
-        </Card>
-      </TouchableOpacity>
-    );
-  };
+
+          <View style={styles.actionButton}>
+            <FontAwesome name="paper-plane" size={20} color="blue" />
+            <Text style={styles.actionText}>Postuler</Text>
+          </View>
+        </View>
+      </Card>
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={{ flex: 1, marginVertical: 30 }}>
