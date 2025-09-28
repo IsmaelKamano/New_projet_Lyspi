@@ -1,75 +1,86 @@
 import React from 'react';
-import { StyleSheet, View, FlatList, Text, Image, TouchableOpacity, Linking } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import { StyleSheet, View, FlatList, Text, Image, TouchableOpacity } from 'react-native';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import images from '../assets/index';
 import Header from '../components/Header';
+import { useNavigation } from '@react-navigation/native';
 
 const stories = [
   {
     id: '1',
     name: 'Amina B.',
     image: images.ginhoSong,
-    story: 'Après son diplôme, Amina a lancé une startup sociale à succès qui aide les jeunes en difficulté.',
+    story: 'Après son diplôme, Amina a lancé une startup sociale à succès...',
     video: 'https://www.youtube.com/watch?v=Ke90Tje7VS0',
+    date: '12 Juin 2024',
+    lieu: 'Dakar',
+    domaine: 'Éducation sociale',
+    impact: 'A aidé plus de 500 jeunes',
   },
   {
     id: '2',
     name: 'Samir D.',
     image: images.ginhoSong,
-    story: 'Grâce à un mentorat et une formation, Samir a décroché un poste chez Google.',
+    story: 'Grâce à un mentorat, Samir a décroché un poste chez Google.',
     video: 'https://www.youtube.com/watch?v=VO5LaEZpA4Y',
+    date: '5 Avril 2023',
+    lieu: 'Casablanca',
+    domaine: 'Technologie',
+    impact: 'Embauché dans une multinationale',
   },
   {
     id: '3',
     name: 'Lina R.',
     image: images.ginhoSong,
-    story: 'Lina a transformé sa passion pour le design en carrière grâce à un coaching personnalisé.',
+    story: 'Lina a transformé sa passion pour le design en carrière...',
     video: 'file://C:/Users/johns/Downloads/Video/C\'est quoi JWT.mp4',
+    date: '28 Janvier 2022',
+    lieu: 'Abidjan',
+    domaine: 'Design graphique',
+    impact: 'A lancé son propre studio',
   },
 ];
 
-export default function App() {
+export default function SuccessStories() {
+  const navigation = useNavigation();
+
   const renderItem = ({ item }) => {
     return (
-      <Card style={styles.card}>
-        {/* En-tête de la publication */}
-        <View style={styles.headers}>
-          <Image style={{ width: 40, height: 40, borderRadius: 40 }} source={images.ginhoSong} />
-          
-          <View style={styles.headerText}>
-            <Text style={styles.nom}>Nom</Text>
-            <Text style={styles.date}>12h 30</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('SuccessStoriesDetails', { story: item })}>
+        <Card style={styles.card}>
+          {/* En-tête de la publication */}
+          <View style={styles.headers}>
+            <Image style={{ width: 40, height: 40, borderRadius: 40 }} source={images.ginhoSong} />
+            <View style={styles.headerText}>
+              <Text style={styles.nom}>Nom</Text>
+              <Text style={styles.date}>12h 30</Text>
+            </View>
           </View>
-        </View>
 
+          <Image source={item.image} style={styles.image} />
+          <Card.Content>
+            <Title>{item.name}</Title>
+            <Paragraph>{item.story}</Paragraph>
+          </Card.Content>
 
-        <Image source={item.image } style={styles.image} />
-        <Card.Content>
-          <Title>{item.name}</Title>
-          <Paragraph>{item.story}</Paragraph>
-        </Card.Content>
-        {/* Boutons d'interaction */}
-        <View style={styles.actionse}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => alert ('vous avez cliquer sur ce boutton')}>
-            <Text style={styles.actionText}>👍 Like</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => alert ('vous avez cliquer sur ce boutton')}>
-            <Text style={styles.actionText}>💬 Commentaire</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => alert ('vous avez cliquer sur ce boutton')}>
-            <Text style={styles.actionText}>🤝 Partager</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <Card.Actions style={styles.actions}>
-          <Button onPress={() => Linking.openURL(item.video)}>🎥 Voir la vidéo</Button>
-        </Card.Actions> */}
-      </Card>
+          <View style={styles.actionse}>
+            <TouchableOpacity style={styles.actionButton} onPress={() => alert('Vous avez cliqué sur Like')}>
+              <Text style={styles.actionText}>👍 Like</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton} onPress={() => alert('Vous avez cliqué sur Commentaire')}>
+              <Text style={styles.actionText}>💬 Commentaire</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton} onPress={() => alert('Vous avez cliqué sur Partager')}>
+              <Text style={styles.actionText}>🤝 Partager</Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.header}>🎉 Success Stories Inspirantes</Text> */}
       <Header />
       <FlatList
         data={stories}
@@ -88,13 +99,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     padding: 7
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    paddingHorizontal: 16,
-  },
   list: {
     paddingHorizontal: 16,
   },
@@ -106,10 +110,6 @@ const styles = StyleSheet.create({
   image: {
     height: 200,
     width: '100%',
-  },
-  actions: {
-    justifyContent: 'flex-end',
-    paddingHorizontal: 8,
   },
   actionse: {
     flexDirection: "row",

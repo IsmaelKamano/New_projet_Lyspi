@@ -1,18 +1,30 @@
 import React from 'react';
 import {
-  View, Text, Image, FlatList, StyleSheet, SafeAreaView, TouchableOpacity,
+  View, Text, Image, FlatList, StyleSheet, SafeAreaView, TouchableOpacity, Linking,
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import images from '../assets/index';
 import Header from '../components/Header';
+
+// Fonctions pour détecter si le fichier est une image ou un PDF
+const isImage = (url) => {
+  if (!url) return false;
+  return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(url) ||
+    url.includes('unsplash.com') ||
+    url.includes('images.');
+};
+
+const isPDF = (url) => {
+  if (!url) return false;
+  return /\.pdf$/i.test(url) || url.toLowerCase().includes('.pdf');
+};
 
 const staticOffers = [
   {
     id: 1,
     poste: 'Développeur React Native',
-    fichier_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    fichier_url: 'https://example.com/mon-fichier.pdf',
     entreprise: {
       nom_entreprise: 'TechCorp',
       secteur_geographique: 'Paris, France',
@@ -23,6 +35,8 @@ const staticOffers = [
     date_limite: '30/10/2025',
     contact: 'contact@techcorp.com',
     tags: 'Mobile, Stage',
+    type_offre: 'Stage',
+    description: "Développement d'applications mobiles avec React Native pour une startup innovante.",
   },
   {
     id: 2,
@@ -38,26 +52,22 @@ const staticOffers = [
     date_limite: '15/11/2025',
     contact: 'hello@designify.io',
     tags: 'Design, Créatif',
+    type_offre: 'Alternance',
+    description: "Création de maquettes UI et amélioration de l'expérience utilisateur pour nos produits digitaux.",
   },
 ];
-
-// ✅ Détection améliorée des images même sans extension
-const isImage = (url) => {
-  if (!url) return false;
-  return (
-    /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(url) ||
-    url.includes('unsplash.com') ||
-    url.includes('images.')
-  );
-};
 
 const OffreList = () => {
   const navigation = useNavigation();
 
   const renderItem = ({ item }) => {
+    const imageMode = isImage(item.fichier_url);
+    const pdfMode = isPDF(item.fichier_url);
+
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Details', { offre: item })}>
-        <Card style={styles.card}>
+      <Card style={styles.card}>
+        {/* Zone cliquable pour aller aux détails */}
+        <TouchableOpacity onPress={() => navigation.navigate('DetailsStage', { offre: item })}>
           <View style={styles.header}>
             <Image source={{ uri: item.entreprise.logo_url }} style={styles.logo} resizeMode="contain" />
             <View style={styles.headerText}>
@@ -67,34 +77,64 @@ const OffreList = () => {
             </View>
           </View>
 
-          {/* ✅ Affichage du flyer si image détectée */}
-          {isImage(item.fichier_url) && (
+          {imageMode ? (
             <Card.Cover
               source={{ uri: item.fichier_url }}
               style={{ marginBottom: 10, borderRadius: 8 }}
             />
-          )}
-
-          <View style={styles.actions}>
-            <View style={styles.actionButton}>
-              <FontAwesome name="heart" size={24} color="#ccc" />
-              <Text style={styles.actionText}>Like</Text>
-              <Text style={styles.countText}>12 likes</Text>
+          ) : pdfMode ? (
+            <View style={styles.pdfContainer}>
+              <FontAwesome name="file-pdf-o" size={40} color="#d32f2f" />
+              <TouchableOpacity onPress={() => Linking.openURL(item.fichier_url)}>
+                <Text style={styles.pdfText}>Ouvrir le fichier PDF</Text>
+              </TouchableOpacity>
             </View>
+          ) : null}
 
-            <View style={styles.actionButton}>
-              <FontAwesome name="comment" size={20} color="#007AFF" />
-              <Text style={styles.actionText}>Commenter</Text>
-              <Text style={styles.countText}>3 commentaires</Text>
-            </View>
-
-            <View style={styles.actionButton}>
-              <FontAwesome name="paper-plane" size={20} color="blue" />
-              <Text style={styles.actionText}>Postuler</Text>
-            </View>
+          <View style={styles.details}>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Type d'offre :</Text> {item.type_offre || 'Non précisé'}
+            </Text>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Description :</Text> {item.description}
+            </Text>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Compétences :</Text> {item.competences}
+            </Text>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Date de début :</Text> {item.date_debut}
+            </Text>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Date limite :</Text> {item.date_limite}
+            </Text>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Contact :</Text> {item.contact}
+            </Text>
+            <Text style={styles.infoText}>
+              <Text style={styles.label}>Tags :</Text> {item.tags}
+            </Text>
           </View>
-        </Card>
-      </TouchableOpacity>
+        </TouchableOpacity>
+
+        <View style={styles.actions}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => console.log('Like')}>
+            <FontAwesome name="heart" size={24} color="#ccc" />
+            <Text style={styles.actionText}>Like</Text>
+            <Text style={styles.countText}>12 likes</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.actionButton} onPress={() => console.log('Commenter')}>
+            <FontAwesome name="comment" size={20} color="#007AFF" />
+            <Text style={styles.actionText}>Commenter</Text>
+            <Text style={styles.countText}>3 commentaires</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.actionButton} onPress={() => console.log('Postuler')}>
+            <FontAwesome name="paper-plane" size={20} color="blue" />
+            <Text style={styles.actionText}>Postuler</Text>
+          </TouchableOpacity>
+        </View>
+      </Card>
     );
   };
 
@@ -144,6 +184,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'gray',
   },
+  details: {
+    marginVertical: 10,
+    paddingHorizontal: 5,
+  },
+  infoText: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  label: {
+    fontWeight: 'bold',
+  },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -162,6 +213,23 @@ const styles = StyleSheet.create({
   countText: {
     fontSize: 12,
     color: '#666',
+  },
+  pdfContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    marginBottom: 10,
+    backgroundColor: '#f9f9f9',
+  },
+  pdfText: {
+    marginTop: 8,
+    color: '#d32f2f',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
 });
 

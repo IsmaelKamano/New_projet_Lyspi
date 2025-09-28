@@ -15,104 +15,107 @@ import { useNavigation } from '@react-navigation/native';
 import images from '../assets/index';
 import Header from '../components/Header';
 
-const staticOffers = [
+const staticFormations = [
   {
     id: 1,
-    poste: 'Développeur React Native',
-    fichier_url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', // exemple PDF
+    titre: 'Formation React Native',
+    fichier: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
     entreprise: {
-      nom_entreprise: 'TechCorp',
-      secteur_geographique: 'Paris, France',
+      nom_entreprise: 'CodeFactory',
+      secteur_geographique_nom: 'Paris, France',
       logo_url: images.profilFemme,
+      domaine_intervention: 'Développement mobile',
+      type_entreprise_nom: 'Startup',
+      site_web: 'https://codefactory.io',
     },
-    competences: 'React Native, API REST, Git',
+    description: "Apprenez à développer des applications mobiles avec React Native.",
+    localisation: 'En ligne',
     date_debut: '01/10/2025',
-    date_limite: '30/10/2025',
-    contact: 'contact@techcorp.com',
-    tags: 'Mobile, Stage',
-    type_offre: 'Stage',
-    description: "Développement d'applications mobiles avec React Native pour une startup innovante.",
+    date_fin: '01/12/2025',
+    prerequis: 'Connaissance de base en JavaScript',
+    email_contact: 'formation@codefactory.io',
   },
   {
     id: 2,
-    poste: 'UX/UI Designer',
-    fichier_url: images.ginhoSong, // exemple image
+    titre: 'UI/UX Design Fundamentals',
+    fichier: images.ginhoSong,
     entreprise: {
       nom_entreprise: 'Designify',
-      secteur_geographique: 'Lyon, France',
+      secteur_geographique_nom: 'Lyon, France',
       logo_url: images.profilHomme,
+      domaine_intervention: 'Design numérique',
+      type_entreprise_nom: 'Agence',
+      site_web: 'https://designify.fr',
     },
-    competences: 'Figma, Adobe XD',
-    date_debut: '15/10/2025',
-    date_limite: '15/11/2025',
-    contact: 'hello@designify.io',
-    tags: 'Design, Créatif',
-    type_offre: 'Alternance',
-    description: "Création de maquettes UI et amélioration de l'expérience utilisateur pour nos produits digitaux.",
+    description: "Maîtrisez les bases du design d’interface et de l’expérience utilisateur.",
+    localisation: 'Lyon',
+    date_debut: '10/10/2025',
+    date_fin: '10/12/2025',
+    prerequis: 'Aucun',
+    email_contact: 'contact@designify.fr',
   },
 ];
 
-const OffreList = () => {
+const FormationList = () => {
   const navigation = useNavigation();
 
   const renderItem = ({ item }) => {
-    const isPdf = typeof item.fichier_url === 'string' && item.fichier_url.toLowerCase().endsWith('.pdf');
+    const isPdf = typeof item.fichier === 'string' && item.fichier.toLowerCase().endsWith('.pdf');
 
     return (
       <Card style={styles.card}>
-        {/* Zone cliquable pour naviguer vers les détails */}
-        <TouchableOpacity onPress={() => navigation.navigate('OffreEmploiDetails', { offre: item })}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('FormationDetails', { formation: item })}
+          activeOpacity={0.7}
+        >
           <View style={styles.header}>
-            <Image source={item.entreprise.logo_url} style={styles.logo} resizeMode="contain" />
+            <Image
+              source={typeof item.entreprise.logo_url === 'number' ? item.entreprise.logo_url : { uri: item.entreprise.logo_url }}
+              style={styles.logo}
+              resizeMode="contain"
+            />
             <View style={styles.headerText}>
               <Text style={styles.title}>{item.entreprise.nom_entreprise}</Text>
-              <Text style={styles.location}>{item.entreprise.secteur_geographique}</Text>
-              <Text style={styles.company}>{item.poste}</Text>
+              <Text style={styles.location}>{item.entreprise.secteur_geographique_nom}</Text>
+              <Text style={styles.company}>{item.titre}</Text>
             </View>
           </View>
 
-          {/* Image ou PDF */}
-          {item.fichier_url && isPdf ? (
+          {/* Affichage PDF ou image */}
+          {item.fichier && isPdf ? (
             <View style={styles.pdfContainer}>
               <FontAwesome name="file-pdf-o" size={40} color="#d32f2f" />
-              <TouchableOpacity onPress={() => Linking.openURL(item.fichier_url)}>
+              <TouchableOpacity onPress={() => Linking.openURL(item.fichier)}>
                 <Text style={styles.pdfText}>Ouvrir le fichier PDF</Text>
               </TouchableOpacity>
             </View>
           ) : (
             <Card.Cover
-              source={item.fichier_url}
+              source={
+                typeof item.fichier === 'number' ? item.fichier : { uri: item.fichier }
+              }
               style={{ marginBottom: 10, borderRadius: 8 }}
             />
           )}
 
-          {/* Infos de l'offre */}
+          {/* Infos principales */}
           <View style={styles.infoSection}>
             <Text style={styles.infoText}>
-              <Text style={styles.label}>Type d'offre :</Text> {item.type_offre}
-            </Text>
-            <Text style={styles.descriptionText}>
-              <Text style={styles.label}>Description :</Text> {item.description}
+              <Text style={styles.label}>Début :</Text> {item.date_debut}
             </Text>
             <Text style={styles.infoText}>
-              <Text style={styles.label}>Compétences :</Text> {item.competences}
+              <Text style={styles.label}>Fin :</Text> {item.date_fin}
             </Text>
             <Text style={styles.infoText}>
-              <Text style={styles.label}>Date de début :</Text> {item.date_debut}
+              <Text style={styles.label}>Pré-requis :</Text> {item.prerequis}
             </Text>
             <Text style={styles.infoText}>
-              <Text style={styles.label}>Date limite :</Text> {item.date_limite}
-            </Text>
-            <Text style={styles.infoText}>
-              <Text style={styles.label}>Contact :</Text> {item.contact}
-            </Text>
-            <Text style={styles.infoText}>
-              <Text style={styles.label}>Tags :</Text> {item.tags}
+              <Text style={styles.label}>Contact :</Text> {item.email_contact}
             </Text>
           </View>
         </TouchableOpacity>
 
-        {/* Boutons Like / Commenter / Postuler sans navigation */}
+        {/* Actions (optionnel) */}
         <View style={styles.actions}>
           <TouchableOpacity style={styles.actionButton} onPress={() => alert('Like!')}>
             <FontAwesome name="heart" size={24} color="#ccc" />
@@ -126,9 +129,9 @@ const OffreList = () => {
             <Text style={styles.countText}>3 commentaires</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionButton} onPress={() => alert('Postuler!')}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => alert('S’inscrire!')}>
             <FontAwesome name="paper-plane" size={20} color="blue" />
-            <Text style={styles.actionText}>Postuler</Text>
+            <Text style={styles.actionText}>S’inscrire</Text>
           </TouchableOpacity>
         </View>
       </Card>
@@ -139,7 +142,7 @@ const OffreList = () => {
     <SafeAreaView style={{ flex: 1, marginVertical: 30 }}>
       <Header utiliserBoutonCreer={false} />
       <FlatList
-        data={staticOffers}
+        data={staticFormations}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -189,12 +192,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 4,
   },
-  descriptionText: {
-    fontSize: 14,
-    marginBottom: 8,
-    color: '#333',
-    lineHeight: 20,
-  },
   label: {
     fontWeight: 'bold',
   },
@@ -236,4 +233,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OffreList;
+export default FormationList;

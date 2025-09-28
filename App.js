@@ -5,22 +5,30 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-// Import des écrans et composants
+// Écrans et composants
 import MenuLateral from './src/navigations/MenuLateral';
 import succesStories from './src/Screens/succesStories';
-import FlatsStartup from './src/components/FlatsStartup';
-import EmploiList from './src/Screens/Emploi'; // Liste des offres d'emploi
-import Formation from './src/Screens/Formation';
-import OffreDetailsStage from './src/components/OffreStageDetails';  // Détails offres de stage
-import OffreDetailsEmploi from './src/components/OffreEmploiDetails'; // Détails offres d'emploi
+import FlatsStartup from './src/Screens/FlatsStartup';
+import StartupDetails from './src/components/StartupDetails';
 
-// Import de la liste des offres de stage
+import EmploiList from './src/Screens/Emploi';
+import OffreDetailsEmploi from './src/components/OffreEmploiDetails';
+
 import OffreList from './src/Screens/Stage';
+import OffreDetailsStage from './src/components/OffreStageDetails';
 
+import FormationList from './src/Screens/FormationList';
+import FormationDetails from './src/components/FormationDetails';
+import SuccessStoriesDetails from './src/components/SuccessStoriesDetails';
+
+// Stacks
 const Tab = createBottomTabNavigator();
 const PlusStack = createNativeStackNavigator();
 const StageStack = createNativeStackNavigator();
 const EmploiStack = createNativeStackNavigator();
+const FormationStack = createNativeStackNavigator();
+const StartupStack = createNativeStackNavigator();
+
 
 // Stack pour la section "Plus"
 function PlusStackNavigator() {
@@ -32,6 +40,24 @@ function PlusStackNavigator() {
         options={{ title: 'Plus', headerShown: false }}
       />
     </PlusStack.Navigator>
+  );
+}
+
+// Stack Startups (liste + détails)
+function StartupStackNavigator() {
+  return (
+    <StartupStack.Navigator screenOptions={{ headerShown: true }}>
+      <StartupStack.Screen
+        name="StartupList"
+        component={FlatsStartup}
+        options={{ title: 'Startups' }}
+      />
+      <StartupStack.Screen
+        name="StartupDetails"
+        component={StartupDetails}
+        options={{ title: 'Détail Startup' }}
+      />
+    </StartupStack.Navigator>
   );
 }
 
@@ -54,21 +80,38 @@ function StageStackNavigator() {
 }
 
 // Stack Emploi (liste + détails)
-// 👉 Changement du nom "DetailsEmploi" en "OffreEmploiDetails" pour correspondre à la navigation
 function EmploiStackNavigator() {
   return (
     <EmploiStack.Navigator screenOptions={{ headerShown: true }}>
       <EmploiStack.Screen
         name="EmploiList"
         component={EmploiList}
-        options={{ title: 'Offres d\'Emploi' }}
+        options={{ title: "Offres d'Emploi" }}
       />
       <EmploiStack.Screen
-        name="OffreEmploiDetails"          // <-- ici le nom doit correspondre à la navigation dans Emploi.js
+        name="OffreEmploiDetails"
         component={OffreDetailsEmploi}
-        options={{ title: 'Détail Offre d\'Emploi' }}
+        options={{ title: "Détail Offre d'Emploi" }}
       />
     </EmploiStack.Navigator>
+  );
+}
+
+// Stack Formation (liste + détails)
+function FormationStackNavigator() {
+  return (
+    <FormationStack.Navigator screenOptions={{ headerShown: true }}>
+      <FormationStack.Screen
+        name="FormationList"
+        component={FormationList}
+        options={{ title: 'Formations' }}
+      />
+      <FormationStack.Screen
+        name="FormationDetails"
+        component={FormationDetails}
+        options={{ title: 'Détail Formation' }}
+      />
+    </FormationStack.Navigator>
   );
 }
 
@@ -77,7 +120,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          headerShown: false, // header caché sur les tabs, visible dans stacks
+          headerShown: false,
           tabBarActiveTintColor: '#6200ee',
           tabBarInactiveTintColor: '#999',
           tabBarStyle: { backgroundColor: '#fff' },
@@ -85,7 +128,7 @@ export default function App() {
       >
         <Tab.Screen
           name="Startups"
-          component={FlatsStartup}
+          component={StartupStackNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="rocket" color={color} size={size} />
@@ -115,13 +158,14 @@ export default function App() {
 
         <Tab.Screen
           name="Formation"
-          component={Formation}
+          component={FormationStackNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="book-open" color={color} size={size} />
             ),
           }}
         />
+
         <Tab.Screen
           name="Success"
           component={succesStories}
@@ -131,9 +175,10 @@ export default function App() {
             ),
           }}
         />
+
         <Tab.Screen
           name="Plus"
-          component={MenuLateral}
+          component={PlusStackNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="dots-horizontal" color={color} size={size} />
@@ -143,7 +188,11 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
+
+  
 }
+
+
 
 const styles = StyleSheet.create({
   screen: {

@@ -8,8 +8,7 @@ import Evenements from '../Screens/Evenements';
 import Notification from '../Screens/Notification';
 import Apropos from '../Screens/Apropos';
 import NousContacter from '../Screens/NousContacter';
-
-const Drawer = createDrawerNavigator();
+ const Drawer = createDrawerNavigator();
 
 export default function MenuLateral() {
   return (
