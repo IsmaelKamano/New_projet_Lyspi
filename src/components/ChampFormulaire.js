@@ -9,12 +9,13 @@ const {width} = Dimensions.get('window')
 const ChampFormulaire = ({
     labelChamp = 'Saisie ici',
     obligatoire = true,
-    _recupererValeurChamp = () => {},
-    valeurs = "bonjour"
+    _recupererValeurChamp,
+    valeurs = "",
+    typeClavier = "default",
+    securise = false
 }) => {
-    
-    var obliger = 'none'
 
+    let obliger = 'none'
     if(obligatoire){
         obliger = 'display'
     }
@@ -30,7 +31,9 @@ const ChampFormulaire = ({
                     style={styles.inputChamp}
                     placeholder= {labelChamp}
                     onChangeText={_recupererValeurChamp}
-                    value= {valeurs}
+                    value = {valeurs}
+                    keyboardType={typeClavier}
+                    secureTextEntry={securise}
                 />
 
                 <Text style={{fontSize: 16, color: 'red', margin: 5, display: obliger}}>*</Text>

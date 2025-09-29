@@ -3,27 +3,24 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Import des écrans et composants
-import MenuLateral from './src/navigations/MenuLateral';
-import succesStories from './src/Screens/succesStories';
-import FlatsStartup from './src/components/FlatsStartup';
-import Stage from './src/Screens/Stage';
-import Emploi from './src/Screens/Emploi';
-import Formation from './src/Screens/Formation';
-import Acceuil from './src/Screens/Acceuil';
-import Inscription from './src/Screens/Inscriptions';
-import MainTabs from './src/navigations/MainTabs';
+import MenuLateral from './MenuLateral';
+import succesStories from '../Screens/succesStories';
+import FlatsStartup from '../components/FlatsStartup';
+import Stage from '../Screens/Stage';
+import Emploi from '../Screens/Emploi';
+import Formation from '../Screens/Formation';
+import Acceuil from '../Screens/Acceuil';
+import Inscription from '../Screens/Inscriptions';
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 
 // App principale
-export default function App() {
+export default function MainTabs() {
   return (
-    <NavigationContainer>
-      {/* <Tab.Navigator
+    // <NavigationContainer>
+      <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: '#6200ee',
@@ -85,20 +82,8 @@ export default function App() {
             ),
           }}
         />
-      </Tab.Navigator> */}
-      
-      <Stack.Navigator>
-        <Stack.Screen name="Acceuil" component={Acceuil} options={{ headerShown: false }} />
-        <Stack.Screen name="Inscription" component={Inscription} options={{ headerShown: false }} />
-        <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-        <Stack.Screen name="FlatsStartup" component={FlatsStartup} options={{ headerShown: false }} />
-        <Stack.Screen name="Stage" component={Stage} options={{ headerShown: false }} />
-        <Stack.Screen name="Emploi" component={Emploi} options={{ headerShown: false }} />
-        <Stack.Screen name="Formation" component={Formation} options={{ headerShown: false }} />
-        <Stack.Screen name="Success" component={succesStories} options={{ headerShown: false }} />
-        <Stack.Screen name="MenuLateral" component={MenuLateral} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      </Tab.Navigator>
+    // {/* </NavigationContainer> */}
   );
 }
 

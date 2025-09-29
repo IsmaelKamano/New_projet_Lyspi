@@ -1,57 +1,74 @@
 import { useState } from "react";
-import { StyleSheet, TouchableHighlight, View, Text} from "react-native";
-import couleur from "../utils/couleurs/couleurs";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
-const SelectionRadio = ({etiquette = "Label"}) => {
-    const [selected, setSelected] = useState(false);
-    const [fontRadio, setFontRadio] = useState('white');
-    const [valeur, setValeur] = useState("");
-    const [bordure, setBordure] = useState('black');
-    return (
-        <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: -5,
-                    marginVertical: 10,
-                    marginBottom: 20,
-                    marginHorizontal: 'auto'
-                }}>
-            <Text style={{fontSize: 14}}>
-                {etiquette} | {valeur}
-            </Text>
-            
-            <TouchableHighlight
-                onPress={() => {
-                    setSelected(!selected);
-                    setFontRadio(selected ? 'white' : 'black');
-                    setValeur(valeur)
-                    if (fontRadio === 'black') {
-                        setFontRadio('white');
-                    }
-                }}
-                style={{
-                    backgroundColor: fontRadio,
-                    width: 20,
-                    height: 20,
-                    borderRadius: 10,
-                    borderWidth: 2,
-                    borderColor: 'black',
-                    marginHorizontal: 10
-                }}
-                underlayColor='white'
-            >
-                <View />
-            </TouchableHighlight>
-        </View>
-    )
-}
+/**
+ * Composant Radio générique
+ * @param {Array} options - Liste des options à afficher (ex: ["Etudiant", "Diplômé"])
+ * @param {string|null} defaultValue - Valeur sélectionnée par défaut
+ * @param {function} onChange - Fonction appelée quand une option est sélectionnée
+ */
+const SelectionRadio = ({
+  options = [],
+  defaultValue = null,
+  onChange = () => {}
+}) => {
+  const [selected, setSelected] = useState(defaultValue);
 
-export default SelectionRadio
+  const handleSelect = (value) => {
+    setSelected(value);
+    onChange(value); // on informe le parent de la sélection
+  };
+
+  return (
+    <View style={styles.container}>
+      {options.map((option, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.radioContainer}
+          onPress={() => handleSelect(option)}
+        >
+          <Text style={styles.label}>{option} </Text>
+          <View
+            style={[
+              styles.radioCircle,
+              selected === option && styles.radioSelected,
+            ]}
+          />
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
+
+export default SelectionRadio;
 
 const styles = StyleSheet.create({
-    etiquette: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginRight: 10
-    }
-})
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 20,
+  },
+  radioContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  radioCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "black",
+    marginLeft: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  radioSelected: {
+    backgroundColor: "black",
+  },
+  label: {
+    fontSize: 14,
+  },
+});
+
+
