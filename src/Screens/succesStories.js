@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Text, Image, Linking, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
-import { Card, Title, Paragraph, Button, Avatar } from 'react-native-paper';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  Image,
+  Linking,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  Alert,
+  Platform,
+} from 'react-native';
+import { Card, Paragraph, Button, Avatar } from 'react-native-paper';
 import Header from '../components/Header';
+import { useNavigation } from '@react-navigation/native';
 
 const initialStories = [
   {
@@ -40,6 +53,7 @@ const initialStories = [
 ];
 
 export default function SuccessStories() {
+  const navigation = useNavigation();
   const [stories, setStories] = useState(initialStories);
   const [modalVisible, setModalVisible] = useState(false);
   const [newStory, setNewStory] = useState({
@@ -54,6 +68,7 @@ export default function SuccessStories() {
   });
   const [isVideoContent, setIsVideoContent] = useState(true);
 
+  // ✅ Création d'une nouvelle histoire
   const handleCreateStory = () => {
     if (!newStory.name || !newStory.specialty || !newStory.description || !newStory.lieu || !newStory.impact) {
       Alert.alert('Erreur', 'Veuillez remplir tous les champs obligatoires.');
@@ -94,6 +109,7 @@ export default function SuccessStories() {
     setModalVisible(false);
   };
 
+  // ✅ Affichage d’une carte d’histoire
   const renderItem = ({ item }) => {
     const thumbnailUrl = item.videoId ? `https://img.youtube.com/vi/${item.videoId}/0.jpg` : item.image;
     const isVideo = !!item.videoId;
@@ -117,31 +133,27 @@ export default function SuccessStories() {
               style={styles.mediaContainer}
             >
               <Image source={{ uri: thumbnailUrl }} style={styles.mediaThumbnail} />
-              {isVideo && (
-                <Text style={styles.videoText}>▶ Voir la vidéo</Text>
-              )}
+              {isVideo && <Text style={styles.videoText}>▶ Voir la vidéo</Text>}
             </TouchableOpacity>
           )}
         </Card.Content>
         <Card.Actions style={styles.actions}>
-          <Button style={styles.bouton} onPress={() => console.log(`Liker l'histoire de ${item.name}`)}>👍 Like</Button>
-          <Button style={styles.bouton} onPress={() => console.log(`Commenter l'histoire de ${item.name}`)}>💬 Commenter</Button>
-          <Button style={styles.bouton} onPress={() => console.log(`Partager l'histoire de ${item.name}`)}>🤝 Partager</Button>
+          <Button onPress={() => Alert.alert("Like 👍")}>👍 Like</Button>
+          <Button onPress={() => Alert.alert("Commentaire 💬")}>💬 Commenter</Button>
+          <Button onPress={() => Alert.alert("Partage 🤝")}>🤝 Partager</Button>
         </Card.Actions>
       </Card>
     );
   };
 
+  // ✅ Rendu final avec détection plateforme
   return (
     <View style={styles.container}>
       <Header utiliserBoutonCreer={true} onCreatePress={() => setModalVisible(true)} />
       <Text style={styles.header}>Histoires de Réussite</Text>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
+
+      {/* Modal d'ajout */}
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Créer une nouvelle histoire</Text>
@@ -159,7 +171,7 @@ export default function SuccessStories() {
             />
             <TextInput
               style={[styles.input, { height: 100 }]}
-              placeholder="Description de l'histoire"
+              placeholder="Description"
               value={newStory.description}
               onChangeText={(text) => setNewStory({ ...newStory, description: text })}
               multiline
@@ -176,12 +188,6 @@ export default function SuccessStories() {
               value={newStory.impact}
               onChangeText={(text) => setNewStory({ ...newStory, impact: text })}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="URL de l'avatar (optionnel)"
-              value={newStory.avatar}
-              onChangeText={(text) => setNewStory({ ...newStory, avatar: text })}
-            />
             <View style={styles.toggleContainer}>
               <Button
                 onPress={() => setIsVideoContent(true)}
@@ -192,7 +198,6 @@ export default function SuccessStories() {
               <Button
                 onPress={() => setIsVideoContent(false)}
                 mode={!isVideoContent ? 'contained' : 'outlined'}
-                style={styles.toggleButton}
               >
                 Image
               </Button>
@@ -200,7 +205,7 @@ export default function SuccessStories() {
             {isVideoContent ? (
               <TextInput
                 style={styles.input}
-                placeholder="URL de la vidéo YouTube"
+                placeholder="URL YouTube"
                 value={newStory.videoUrl}
                 onChangeText={(text) => setNewStory({ ...newStory, videoUrl: text })}
               />
@@ -224,6 +229,7 @@ export default function SuccessStories() {
         </View>
       </Modal>
 
+      {/* Liste des histoires */}
       <FlatList
         data={stories}
         renderItem={renderItem}
@@ -235,94 +241,23 @@ export default function SuccessStories() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f4f7',
-    paddingTop: 40,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  list: {
-    paddingHorizontal: 16,
-  },
-  card: {
-    marginBottom: 24,
-    borderRadius: 8,
-  },
-  actions: {
-    justifyContent: 'space-between',
-    paddingHorizontal: 5,
-    borderWidth: 1,
-    flex: 1
-  },
-  mediaContainer: {
-    marginTop: 12,
-    position: 'relative',
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  mediaThumbnail: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-  },
+  container: { flex: 1, backgroundColor: '#f0f4f7', paddingTop: 40 },
+  header: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 },
+  list: { paddingHorizontal: 16 },
+  card: { marginBottom: 24, borderRadius: 8 },
+  actions: { justifyContent: 'space-between', paddingHorizontal: 5 },
+  mediaContainer: { marginTop: 12, position: 'relative', borderRadius: 8, overflow: 'hidden' },
+  mediaThumbnail: { width: '100%', height: 200, borderRadius: 8 },
   videoText: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    color: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 4,
-    fontSize: 14,
+    position: 'absolute', bottom: 10, right: 10,
+    backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff',
+    paddingHorizontal: 10, paddingVertical: 4, borderRadius: 4, fontSize: 14,
   },
-  metaText: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    padding: 20,
-    borderRadius: 8,
-    gap: 10,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 10,
-  },
-  toggleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  toggleButton: {
-    marginLeft: 10,
-  },
-  modalActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  // bouton: {
-  //   width: '30%'
-  // }
+  metaText: { fontSize: 14, color: '#666', marginTop: 4 },
+  modalContainer: { flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
+  modalContent: { backgroundColor: '#fff', marginHorizontal: 20, padding: 20, borderRadius: 8 },
+  modalTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
+  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 10, marginBottom: 10 },
+  toggleContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
+  modalActions: { flexDirection: 'row', justifyContent: 'space-between' },
 });
